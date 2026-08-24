@@ -30,8 +30,8 @@
         "pages": [
           "01-current-state-audit",
           "02-keep-rebuild-matrix",
-          "03-repo-review",
-          "04-example-catalog",
+          "copilotkit-mastra/03-repo-review",
+          "copilotkit-mastra/04-example-catalog",
           "05-starter-decision",
           "06-example-adoption",
           "07-repo-to-task-map",
