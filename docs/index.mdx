@@ -1,0 +1,40 @@
+---
+title: "iPix Documentation"
+description: "The source of truth for rebuilding iPix with CopilotKit, Mastra, Supabase, and Cloudflare."
+icon: "camera"
+---
+
+# Build iPix from the verified foundation
+
+iPix is an AI-powered production platform for planning shoots, managing brands, coordinating talent, and delivering media.
+
+This documentation explains what to keep from the proven product, what to rebuild, and how to ship the new system safely.
+
+## Start here
+
+<CardGroup cols={2}>
+  <Card title="Master rebuild plan" icon="route" href="/docs/README">
+    Read the architecture decision, migration gates, and implementation sequence.
+  </Card>
+  <Card title="Task roadmap" icon="list-check" href="/docs/12-task-roadmap">
+    Follow the ordered work needed to build and verify the new iPix foundation.
+  </Card>
+  <Card title="Mastra conversion" icon="brain" href="/docs/mastra/10-mastra-convert">
+    See what agent and workflow logic moves into the new Mastra runtime.
+  </Card>
+  <Card title="Data architecture" icon="database" href="/docs/data/README">
+    Review the verified Supabase schemas, security boundaries, and storage model.
+  </Card>
+</CardGroup>
+
+## Core architecture
+
+The rebuild uses a clean Next.js foundation with CopilotKit and Mastra, while keeping proven iPix product logic and Supabase data contracts.
+
+<Note>
+The current production application stays independent until persistence, authorization, and tenant-isolation tests pass in preview.
+</Note>
+
+## Repository
+
+The canonical source is [amo-tech-ai/ipix](https://github.com/amo-tech-ai/ipix) on the `main` branch.

@@ -14,8 +14,8 @@ Read this folder **in number order**. This README is the executive brief; number
 | — | [README.md](./README.md) | Decision: new foundation + reuse iPix product |
 | 01 | [01-current-state-audit.md](./01-current-state-audit.md) | Live runtime, packages, what is proven vs broken |
 | 02 | [02-keep-rebuild-matrix.md](./02-keep-rebuild-matrix.md) | KEEP / PORT / REBUILD with fashion examples |
-| 03 | [03-repo-review.md](03-repo-review.md) | GitHub example scores |
-| 04 | [04-example-catalog.md](04-example-catalog.md) | One starter + reference examples |
+| 03 | [03-repo-review.md](copilotkit-mastra/03-repo-review.md) | GitHub example scores |
+| 04 | [04-example-catalog.md](copilotkit-mastra/04-example-catalog.md) | One starter + reference examples |
 | 05 | [05-starter-decision.md](05-starter-decision.md) | Why `integrations/mastra`, not mastra-pm |
 | 06 | [06-example-adoption.md](06-example-adoption.md) | How to copy official APIs into iPix |
 | 07 | [07-repo-to-task-map.md](07-repo-to-task-map.md) | Repo → proposed Linear tasks |
