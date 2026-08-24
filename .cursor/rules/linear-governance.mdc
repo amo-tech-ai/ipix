@@ -1,0 +1,90 @@
+---
+description: iPix Linear governance — live verification, safe mutations, naming, Done evidence
+alwaysApply: true
+---
+
+# Linear governance — iPixai
+
+When planning operator AI work, Linear must show who owns what and what is Done — not a stale markdown tracker. Agents that trust repo summaries invent wrong blockers.
+
+**Real-world iPix:** Operator signs in → org resolves → CopilotKit chat → Production Planner. Governance mistakes hide the real failure (wrong project, fake Done, missing org membership).
+
+## Scope
+
+Stable **how** to use Linear. Never treat this file as SSOT for dates, statuses, cycle windows, or ownership — those live in **live Linear**.
+
+Companions: `task-naming.mdc` · Linear MCP (`plugin-linear-linear`).
+
+## Source of truth
+
+| Information | Authority |
+|-------------|-----------|
+| Status, project, milestone, cycle, priority, owner | Live Linear |
+| Code | git HEAD + open PR |
+| Production behavior | Browser / production probe |
+| Requirements / AC | Canonical issue |
+| Repo docs (`docs/mastra/`, trackers) | Summary only — may be stale |
+
+Conflict → **report**, do not silently overwrite.
+
+## Access & safety
+
+| Prefer | Fallback |
+|--------|----------|
+| Linear MCP (`plugin-linear-linear`) | GraphQL + `LINEAR_API_KEY` only when MCP cannot set a field |
+
+Never print secrets. Never delete projects/issues unless asked. Bulk/destructive → propose first, apply after approval. Discover MCP tools each session.
+
+## Naming & one concern
+
+- Titles / first mention: **`IPI-NNN · SPEC — Plain English`** (`task-naming.mdc`)
+- Team: **iPix1** (`IPI`) unless the user names another team
+- One independently testable outcome per issue/PR
+- Never mix unrelated docs + production code
+
+## Status & Done
+
+| State | When |
+|-------|------|
+| Backlog | Unscheduled |
+| Todo | Ready to start |
+| In Progress | Actively executing |
+| Done | ACs met + evidence (git, tests, **browser** or honest N/A) — never status-copy alone |
+| Duplicate | `duplicateOf` set |
+| Canceled | Explicitly abandoned |
+
+Reopen Done only with approval (unless the task authorizes correction). Record the unmet AC first.
+
+## Read → mutate → verify
+
+**Read-only:** discover MCP → list filtered issues → spot-check → compare to git (label STALE) → PASS / NEEDS FIXES; mutate only when asked.
+
+**Mutate:** confirm approval → change fields → re-read live.
+
+## Issue create / rewrite checklist
+
+- [ ] Dedupe by title/identifier
+- [ ] Full title + team IPI
+- [ ] Correct project + milestone
+- [ ] Hard `blockedBy` / `blocks` when needed
+
+## AI task execution (short)
+
+```text
+1 Explain simply · 2 Real iPix workflow · 3 Research official docs + repo
+4 Audit existing code · 5 Reuse before build · 6 Plan · 7 Implement
+8 Tests · 9 Browser when UI changed · 10 Docs · 11 Linear · 12 DoD
+```
+
+**Done requires:** ACs · tests · browser (or honest N/A) · docs · Linear updated · fail-closed auth preserved.
+
+PR body: `pr-description.mdc`.
+
+## Anti-patterns
+
+| ❌ Don’t | ✅ Do |
+|---------|--------|
+| Trust markdown dates | Live Linear |
+| Bare `IPI-249` in user text | Full **IPI-249 · SPEC — …** |
+| Mark Done from a sibling merge | Evidence for **this** issue |
+| Weaken fail-closed auth for a green `/info` | Fix data/env |

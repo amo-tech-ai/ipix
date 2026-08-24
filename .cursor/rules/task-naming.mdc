@@ -1,0 +1,40 @@
+---
+description: Always pair Linear/spec IDs with plain-English task names — never bare IPI-NNN
+alwaysApply: true
+---
+
+# Task naming (agents + Linear)
+
+**Bare IDs are forbidden in user-facing text.** `IPI-487` means nothing without context.
+
+## Required format
+
+```text
+{ID} · {SPEC} — {Plain English title}
+```
+
+| ✅ Good | ❌ Bad |
+|---------|--------|
+| **IPI-935 · COPILOT-AUTHZ-LOCAL-001 — Fix Signed-In Operator /info 403** | "the IPI-935 ticket" |
+| **DEV-STAB-001 — Block combined npm run dev (fork storm)** | "do the stab ticket" |
+
+## When writing
+
+- **First mention** in a reply → full name (bold).
+- **Roadmaps, tables, PR titles, commits** → full name every row/line.
+- **Later in the same message** → plain English title only if still unambiguous.
+- **Links** → markdown link label uses full name; URL may use numeric ID.
+
+## SSOT for canonical names
+
+| Track | Lookup |
+|-------|--------|
+| Mastra conversion | `docs/mastra/10-mastra-convert.md`, `docs/mastra/mastra-plan.md` |
+| Host / Cursor load | `docs/cursor/linux-audit.md` |
+| Any IPI task | Live Linear issue **title** |
+
+If unsure of the title, read the SSOT or Linear before citing the ID.
+
+## Linear issue titles
+
+When creating or renaming issues, set **title** to the full format above (not `IPI-487` alone).

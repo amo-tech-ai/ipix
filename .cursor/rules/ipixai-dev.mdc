@@ -1,0 +1,49 @@
+---
+description: iPixai hard gates — split-dev, no prod Supabase writes, no old Mastra copy, no OOM fork storm
+alwaysApply: true
+---
+
+# iPixai development gates
+
+This repo is the **clean** CopilotKit + Mastra starter (`/home/sk/ipixai`). Old operator app is `/home/sk/ipix`.
+
+## DEV-STAB-001 — never combined `npm run dev`
+
+Combined `npm run dev` is **blocked** (`package.json` exits 1). It was implicated in a Node fork storm / host OOM.
+
+| ✅ Do | ❌ Don't |
+|-------|---------|
+| `npm run dev:ui` (port 3000) in one terminal | `npm run dev` / `concurrently` UI+agent |
+| `npm run dev:agent` (port 4111) in another | Stack leftover watchers / 19-worker builds on busy ports |
+| `scripts/dev-guard.mjs` for port checks | `pkill -f node` |
+
+Evidence: `docs/cursor/linux-audit.md`.
+
+## Supabase
+
+- Do **not** mutate **production** Supabase during audits or Core Mastra work.
+- Preview / `mastra_preview` only until the golden persistence test is green.
+- Tools that write domain data: SECURITY DEFINER RPCs + user JWT — not Mastra as `postgres` on `shoot.*`.
+
+## Mastra port
+
+- Follow `docs/mastra/10-mastra-convert.md`.
+- First port: Production Planner + compute-only shoot tools + Memory/PostgresStore + `makeMemoryResourceId`.
+- Do **not** copy `/home/sk/ipix/app/src/mastra` wholesale.
+- Do **not** copy Worker/Hyperdrive/ALS/`emitInterruptOutcome`/DurableAgent unless a **current** failure proves they are required.
+
+## CopilotKit
+
+- Keep the starter route; pass a real `resourceId` (not `"default"`) once auth exists.
+- UI verification: exercise the flow in the browser when UI behavior changes.
+
+## Graphify
+
+- CLI: `/home/sk/.local/bin/graphify` (**graphifyy 0.9.48** via `uv tool`). nvm’s `graphify` 0.17.1 is a **different** Node binary — prepend `$HOME/.local/bin` to PATH when querying.
+- Graph: `graphify-out/graph.json`. Update: `PATH="$HOME/.local/bin:$PATH" graphify update .`
+- Cursor rule: `.cursor/rules/graphify.mdc` (official always-on). MCP: `graphify-mcp` in `~/.cursor/mcp.json`.
+
+## Secrets
+
+- `.env` is gitignored. Never print API keys.
+- This repo is **not** wired to old Infisical/`cd app` commands until `.infisical.json` exists.

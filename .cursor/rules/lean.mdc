@@ -1,0 +1,68 @@
+---
+description: Lean development lifecycle — hard gates, modes, and pointers
+alwaysApply: true
+---
+
+# Lean — efficient development lifecycle (iPixai)
+
+**Orchestrator rule (slim).** Hard gates + modes stay here.
+
+| Detail lives in | Role |
+|-----------------|------|
+| `ponytail.mdc` | Smallest safe change ladder |
+| `task-naming.mdc` | **IPI-NNN · SPEC — Title** |
+| `task-accuracy.mdc` | Evidence / verification levels |
+| `ipixai-dev.mdc` | Split-dev, no prod Supabase writes |
+| `mastra-mcp.mdc` | Mastra docs MCP (`alwaysApply: false`) |
+| `linear-governance.mdc` | Live Linear |
+
+**Hard gates (never override):** never force-push to `main`/`master`; one concern per PR **and** per commit; never combined `npm run dev`; never mutate production Supabase; no client AI keys; do not copy old `/home/sk/ipix/app/src/mastra` wholesale.
+
+## Operating modes
+
+Set explicitly (`lean-strict`, `lean-relaxed`) or default to **lean-standard**.
+
+| Mode | When | Tests | Plan |
+|------|------|-------|------|
+| **lean-relaxed** | Typo, copy, single-file fix, docs-only | Focused test or lint | Mental checklist OK |
+| **lean-standard** | Default feature/fix | Verify touched paths | Short written plan |
+| **lean-strict** | Migrations, RLS, auth, Mastra/agents, CopilotKit runtime | Full matrix + build when applicable + honest runtime probes | Plan + rollback notes |
+
+## Decision ladder (reuse → create)
+
+Canonical rung order lives in **`ponytail.mdc` only**.
+
+| Decision | Choose when | Avoid when |
+|----------|-------------|------------|
+| **Reuse / extend** | Same behavior, clear owner | Hidden coupling / wrong layer |
+| **Focused tests** | Every commit during implementation | Full suite on every save |
+| **Full suite / build** | Routes, env, middleware, pre-PR | Docs-only change |
+| **Open PR** | Branch pushed, checks green | Mixed concerns still in the diff |
+
+## Lifecycle
+
+```text
+Understand → Plan → Implement (ponytail) → Test → Diff → Commit → PR
+```
+
+Commands (repo root, **not** old `app/`):
+
+- UI: `npm run dev:ui`
+- Agent: `npm run dev:agent` (separate terminal)
+- Build: `npm run build` (blocked if 3000/4111 busy)
+
+## Checklist (lean-standard+)
+
+```text
+[ ] Issue + AC  [ ] Plan  [ ] Smallest safe change
+[ ] Verify  [ ] One concern  [ ] Commit → PR
+```
+
+## Conflict avoidance
+
+| Topic | Owner |
+|-------|--------|
+| Code minimalism | `ponytail.mdc` |
+| Linear mutations | `linear-governance.mdc` |
+| Dev servers / OOM | `ipixai-dev.mdc` |
+| Mastra APIs | `mastra-mcp.mdc` + installed types |

@@ -1,0 +1,14 @@
+# Generated and vendor trees — do not index (Cursor OOM risk)
+node_modules/
+.next/
+.mastra/
+graphify-out/
+out/
+build/
+dist/
+coverage/
+*.log
+.next/standalone/
+.next/cache/
+.mastra/output/
+.mastra/.build/

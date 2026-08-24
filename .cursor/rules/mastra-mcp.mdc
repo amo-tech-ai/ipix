@@ -1,0 +1,71 @@
+---
+description: Mastra docs MCP — tool selection, projectPath for iPixai, installed types win
+globs: src/mastra/**,docs/mastra/**,**/mastra/**
+alwaysApply: false
+---
+
+# Mastra MCP — docs lookup for iPixai
+
+**Live config:** `~/.cursor/mcp.json` → server id **`mastra`** (Cursor exposes as **`user-mastra`**).  
+**Official:** [Build with AI](https://mastra.ai/docs/getting-started/build-with-ai) · [mastra.ai/llms.txt](https://mastra.ai/llms.txt)  
+**Conversion SSOT:** `docs/mastra/10-mastra-convert.md`
+
+## Skills vs MCP
+
+| Layer | When to use |
+|-------|-------------|
+| **Mastra skills** | Setup, best practices, CLI |
+| **`user-mastra` MCP** | Embedded package search, exports, `mastraMigration` |
+| **Installed `node_modules/@mastra/*`** | API truth — grep before guessing signatures |
+| **Remote `.md` / `llms.txt`** | MCP miss or path 404 |
+
+Never trust training-data Mastra APIs. Never copy old iPix APIs just because they compile.
+
+## `projectPath` (required for embedded-doc tools)
+
+This repo’s Mastra packages live at the **repo root** (not old iPix `app/`).
+
+```bash
+echo "$(git rev-parse --show-toplevel)"
+```
+
+Pass that as `projectPath` on `searchMastraDocs`, `readMastraDocs`, `listMastraPackages`, `getMastraExports`.
+
+## Tool pick (`user-mastra`)
+
+| Need | Tool | Required args |
+|------|------|---------------|
+| Full doc page by path | **`mastraDocs`** | `paths` |
+| Browse embedded package docs | **`readMastraDocs`** | `package`, **`projectPath`** |
+| Keyword search in installed docs | **`searchMastraDocs`** | `query`, **`projectPath`** |
+| List installed `@mastra/*` | **`listMastraPackages`** | **`projectPath`** |
+| Export / API surface | **`getMastraExports`** | `package`, **`projectPath`** |
+| v0 → v1 migration | **`mastraMigration`** | per schema |
+
+## Agent workflow
+
+1. Change under `src/mastra/` → this rule + `docs/mastra/10-mastra-convert.md`.
+2. Need a doc page → `mastraDocs`.
+3. Need installed API → `searchMastraDocs` / `readMastraDocs` with **this repo’s** `projectPath`.
+4. MCP empty → `https://mastra.ai/docs/....md` or `llms.txt`.
+
+## iPixai wiring (do not resurrect old iPix)
+
+| Topic | iPixai |
+|-------|--------|
+| Code location | `src/mastra/` |
+| CopilotKit | In-process `MastraAgent.getLocalAgents({ mastra, resourceId })` |
+| `resourceId` | `org:{orgId}::user:{userId}` — never hardcoded `"default"` in Core |
+| Storage | PostgresStore + preview `mastra` schema; **no** LibSQL in prod path; **no** Worker storage switch |
+| Agent IDs | `default` + `production-planner` first; more IDs per convert plan |
+| Dev | `npm run dev:agent` on `:4111` — **not** combined `npm run dev` |
+| Models | Starter pin until a provider ticket; do not port Cloudflare `resolveAgentModel` |
+
+## Node
+
+Mastra docs MCP expects **Node.js ≥ 22.13.0**. If `user-mastra` is error-only, upgrade Node and restart Cursor.
+
+## Example prompts
+
+- “Add Memory + PostgresStore for Production Planner — verify current `@mastra/pg` constructor from installed types”
+- “Does working memory `scope: thread` still throw if CopilotKit seeds a missing thread?”

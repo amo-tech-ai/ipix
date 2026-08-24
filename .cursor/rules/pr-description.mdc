@@ -1,0 +1,61 @@
+---
+description: Hard rule — every PR must have a plain-English description with real-world iPix examples
+alwaysApply: true
+---
+
+# PR description — plain English (hard rule)
+
+**Every time** you create or edit a GitHub PR (`gh pr create`, `gh pr edit`), the body **must** be easy to understand for a human who did not write the code.
+
+## Required sections (in order)
+
+```markdown
+## What this PR does (plain English)
+
+<2–4 sentences: what changes, for whom, why. No jargon-only bullets.>
+
+**This PR does not** <explicit non-goals>
+
+## Hard rule (every PR)
+
+> **One concern per PR and per commit.** Never mix docs + production code, or two different tasks, in the same PR.
+
+This PR’s single concern: **`<one path or concern label>`**.
+
+## Why it matters in iPix
+
+<2–4 sentences: real product/ops consequence. Name a surface, persona, or workflow.>
+
+## Test plan
+
+- [ ] <concrete checks a reviewer can run>
+```
+
+## Real-world hooks (use what fits)
+
+| Domain | Example |
+|--------|---------|
+| Operator chat | Production Planner shot list, refresh keeps history |
+| Auth / data | Login → org-scoped thread; Org B cannot read Org A |
+| Mastra | Planner tools stay compute-only until HITL RPC |
+| Host | Split `dev:ui` / `dev:agent` — combined `npm run dev` stays blocked |
+
+### Good vs bad
+
+| ✅ Good | ❌ Bad |
+|--------|--------|
+| “After refresh, the operator still sees the SS26 shot-list chat instead of a blank thread.” | “Wire PostgresStore schemaName and disableInit.” |
+| “Org B is denied the same CopilotKit threadId so tenants cannot leak planner history.” | “Fix resourceId partition key.” |
+
+## Rules
+
+| Do | Don't |
+|----|--------|
+| Lead with what / for whom / why | Lead with file lists only |
+| Name the **single concern** | Bundle seed + E2E + docs as one PR |
+| Full task names on first mention | Bare `IPI-488` |
+| Keep the hard-rule block | Soften one-concern |
+
+## Title
+
+`IPI-NNN · SPEC — Plain English title` (see `task-naming.mdc`).

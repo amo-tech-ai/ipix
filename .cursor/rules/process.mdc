@@ -1,0 +1,37 @@
+---
+description: >-
+  iPixai process docs — conversion plan, Mastra/CopilotKit playbooks.
+  Load when the user mentions process, playbooks, or architecture review.
+alwaysApply: false
+---
+
+# Process playbooks (on demand)
+
+This repo does **not** have old iPix `docs/process/` or `AGENTS.md` yet. Use:
+
+| Doc | Use for |
+|-----|---------|
+| `docs/mastra/10-mastra-convert.md` | What to port from old Mastra |
+| `docs/mastra/mastra-plan.md` | Core → MVP → Post-MVP |
+| `docs/mastra/supabase-mastra.md` | `mastra` schema |
+| `docs/cursor/linux-audit.md` | Host OOM / DEV-STAB-001 |
+
+## What goes where
+
+| Primitive | Use for |
+|-----------|---------|
+| **`.cursor/rules/*.mdc`** | Hard gates (`alwaysApply`) and on-demand entry points |
+| **`docs/mastra/`** | Conversion and platform notes |
+| **Skills** | Load from Cursor/Claude skills when the stack matches (Mastra, CopilotKit, Supabase) |
+
+Do **not** dump playbooks into new alwaysApply rules.
+
+## Sibling rules
+
+| Topic | Rule |
+|-------|------|
+| Smallest change | `ponytail.mdc` |
+| Lifecycle | `lean.mdc` |
+| Evidence | `task-accuracy.mdc` |
+| Linear | `linear-governance.mdc` |
+| Dev servers | `ipixai-dev.mdc` |

@@ -1,0 +1,11 @@
+# Graphify — skip generated/vendor trees (Cursor OOM / useless AST)
+node_modules/
+.next/
+.mastra/
+.git/
+coverage/
+dist/
+out/
+build/
+*.log
+graphify-out/cache/

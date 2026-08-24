@@ -1,0 +1,24 @@
+{
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/.mastra/**": true,
+    "**/out/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/coverage/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.mastra": true,
+    "**/out": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "files.exclude": {
+    "**/.next/standalone": true,
+    "**/.next/cache": true
+  }
+}

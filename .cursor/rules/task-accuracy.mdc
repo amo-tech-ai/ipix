@@ -1,0 +1,95 @@
+---
+description: Accuracy-first workflow — verify before change, evidence over assumptions, named verification levels, no fake Done
+alwaysApply: true
+---
+
+# Task accuracy — evidence-first standard (all work)
+
+Applies to **every** task: Mastra, CopilotKit, Next.js, Supabase, CI, docs — not one stack only.
+
+Companions: `ponytail.mdc` (smallest change), `lean.mdc` (lifecycle), `ipixai-dev.mdc` (dev servers).
+
+## Principles
+
+- Verify before changing.
+- Evidence over assumptions — never guess.
+- One concern per task / PR / commit.
+- Preserve architecture consistency.
+- Prevent documentation drift.
+- Align with Linear, conversion docs, and `origin/main` when a remote exists.
+- If unverifiable → write **NOT VERIFIED**.
+- Do not reopen completed work or re-recommend already-fixed issues.
+- Mitigations are not complete fixes — label them honestly.
+- Installed package types win over old iPix code that merely compiles.
+
+## Stage 1 — Scope
+
+Before code:
+
+1. Compare with git HEAD / open PRs.
+2. Read related Linear issue + AC when one exists.
+3. Classify: ✅ In scope · ⚠️ Related but separate · ❌ Out of scope.
+
+Do not expand scope.
+
+## Stage 2 — Evidence
+
+For every finding, collect from:
+
+1. Current source (`rg`, file read)
+2. Installed package / types when API shape is disputed
+3. Official docs (Mastra MCP, CopilotKit MCP, Context7)
+4. Runtime reproduction when possible (split `dev:ui` / `dev:agent` only)
+
+Classify: ✅ Confirmed · 🟡 Unproven · ⚪ Already fixed · ❌ Incorrect · ⚠️ Out of scope.
+
+**Only implement confirmed, in-scope issues.**
+
+## Stage 3 — Implementation
+
+- One logical change at a time; small commits.
+- Prefer reuse / extend (ponytail ladder).
+- No drive-by refactors.
+- Do not mutate production Supabase.
+
+## Stage 4 — Testing
+
+Focused first (unit / typecheck / lint on touched paths), then broader suite / build as required by lean mode.
+
+## Stage 5 — Verification level (required label)
+
+| Level | Meaning |
+|-------|---------|
+| Unit Verified | Tests only |
+| Build Verified | `npm run build` (dev-guard: ports 3000/4111 free) |
+| Local Runtime Verified | Split `dev:ui` + `dev:agent` (never combined `npm run dev`) |
+| Remote Preview Verified | Preview deploy / remote non-prod |
+| Production Verified | Live production evidence |
+
+Never claim production readiness without Production Verified evidence.
+
+## Stage 6 — Docs sync
+
+Before Done: implementation matches `docs/mastra/` and AC. No aspirational checkboxes.
+
+## Stage 7 — Architecture
+
+No duplicate SSOT, no old Worker shims, no unnecessary abstractions.
+
+## Stage 8 — Merge / Done gate
+
+CI green · review threads resolved · auth/RLS when applicable · regression tests when behavior changed · remaining risks named.
+
+## Reporting (handoff)
+
+| Item | Result |
+|------|--------|
+| Finding | Exact issue |
+| Evidence | Code / Docs / Runtime / MCP |
+| Classification | Confirmed / Unproven / Already Fixed / Incorrect / Out of Scope |
+| Change Made | Files (or none) |
+| Regression Test | Added / updated / N/A |
+| Validation Level | Unit / Build / Local Runtime / Remote Preview / Production |
+| Scope Preserved | Yes / No |
+| Remaining Risks | Details |
+| Next Action | Details |
